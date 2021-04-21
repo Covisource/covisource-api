@@ -1,16 +1,17 @@
 // env config
 require("dotenv").config();
 
-// bodyparser config
-const bodyParser = require("body-parser");
+// express config
+const express = require("express");
+const app = express();
 
 // routers
 const { get404 } = require("./controllers/errorController");
 const indexRouter = require("./routes/index");
 
-// express config
-const express = require("express");
-const app = express();
+// bodyparser config
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
 app.use(indexRouter);
 app.use(get404);
