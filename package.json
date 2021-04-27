@@ -1,9 +1,9 @@
 {
-  "name": "devmark-api",
+  "name": "covisource-api",
   "version": "1.0.0",
-  "description": "The official API for DevMark",
-  "main": "app.js",
-  "repository": "https://github.com/project-devmark/devmark-api",
+  "description": "The official API for the Covisource platform.",
+  "main": "app.ts",
+  "repository": "https://github.com/Covisource/covisource-api",
   "author": "Aaryaman Maheshwari",
   "license": "MIT",
   "private": true,
