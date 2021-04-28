@@ -8,10 +8,6 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /dist
 
@@ -26,3 +22,7 @@ yarn-error.log*
 
 # env files
 .env
+
+# firebase
+**/firebaseCredDev.json
+**/firebaseCredProd.json

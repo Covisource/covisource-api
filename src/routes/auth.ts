@@ -1,10 +1,11 @@
 // init
 import express from "express";
+import { newUser_POST } from "../controllers/auth";
 const router = express.Router();
 
 // controllers
-import { home } from "../controllers/index";
+router.post("/newUser")
 
-router.get("/", home);
+router.get("/", newUser_POST);
 
 export default router;
