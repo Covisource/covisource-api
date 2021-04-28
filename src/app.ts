@@ -25,21 +25,9 @@ import authRouter from "./routes/auth";
 // bodyparser config
 app.use(bodyParser.json());
 
-// firebase config
-let serviceAccount;
-if (process.env.ENVIRONMENT === "DEV") {
-  serviceAccount = require("./firebaseCredDev.json");
-} else {
-  serviceAccount = require("./firebaseCredProd.json");
-}
-
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount as any),
-  databaseURL: process.env.DB_URL,
-});
 
 app.use(indexRouter);
-app.use(authRouter);
+app.use("/auth", authRouter);
 app.use(get404);
 
 app.listen(process.env.PORT || 8080);
