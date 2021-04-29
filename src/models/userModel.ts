@@ -14,6 +14,14 @@ const userSchema = new schema({
     type: String,
     required: [true, "Social Provider is required"],
   },
+  resources: [
+    {
+      id: {
+        type: mongoose.Types.ObjectId,
+        required: [true, "Resource Id is required"],
+      },
+    },
+  ],
   usesIP: {
     type: Boolean,
     required: false,
