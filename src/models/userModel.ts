@@ -1,21 +1,10 @@
-// export interface userSchema {
-// name: string;
-// email?: string;
-// provider: string;
-// usesIP?: boolean;
-// IP?: string;
-// isBlocked?: boolean;
-// reputation: number;
-// removedPosts?: number;
-// }
-
 import mongoose from "mongoose";
 const schema = mongoose.Schema;
 
-const user = new schema({
+const userSchema = new schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "Name is required"],
   },
   email: {
     type: String,
@@ -23,7 +12,7 @@ const user = new schema({
   },
   provider: {
     type: String,
-    required: true,
+    required: [true, "Social Provider is required"],
   },
   usesIP: {
     type: Boolean,
@@ -39,10 +28,12 @@ const user = new schema({
   },
   reputation: {
     type: String,
-    required: true,
+    required: [true, "Reputation is required"],
   },
   removedPosts: {
     type: Number,
     required: false,
   },
 });
+
+export default mongoose.model("User", userSchema);
