@@ -25,7 +25,6 @@ import authRouter from "./routes/auth";
 // bodyparser config
 app.use(bodyParser.json());
 
-
 app.use(indexRouter);
 app.use("/auth", authRouter);
 app.use(get404);
