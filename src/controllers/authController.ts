@@ -1,5 +1,4 @@
 import express from "express";
-import { userSchema } from "../schemas/userSchema";
 import { Helper_newUser_POST } from "../helper/authHelper";
 
 export const newUser_POST = async (
