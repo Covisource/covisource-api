@@ -1,7 +1,7 @@
 import express from "express";
 import { userSchema } from "../schemas/userSchema";
 import { db, auth } from "../util/firebase";
-import { Helper_newUser_POST } from "../helper/auth";
+import { Helper_newUser_POST } from "../helper/authHelper";
 
 export const newUser_POST = async (
   req: express.Request,
@@ -24,7 +24,6 @@ export const newUser_POST = async (
 
   //  If the Account Exists function returns anything, return json
 
-  // ERROR: Value for argument "documentPath" is not a valid resource path. Path must be a non-empty string.
   const fsRes = await db.collection("users").doc(user.uid).get();
   const accountExists = helper.accountExists(fsRes);
 
@@ -35,6 +34,9 @@ export const newUser_POST = async (
       message: accountExists.message,
     });
   }
+
+
+  // stuff that happens after all checks pass
 
   // await db
   //   .collection("users")

@@ -13,7 +13,15 @@ export class Helper_newUser_POST {
       return {
         statusCode: 400,
         code: "params_insufficient",
-        message: "Make sure you include both the required fields",
+        message: "Make sure you include the required fields",
+      };
+    }
+
+    if (!this.user.uid) {
+      return {
+        statusCode: 400,
+        code: "bad_data",
+        message: "Make sure the data is valid.",
       };
     }
 
@@ -29,7 +37,7 @@ export class Helper_newUser_POST {
   accountExists = (
     fsRes: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
   ) => {
-    console.log(fsRes)
+    console.log(fsRes);
     if (fsRes.exists && this.mode === "social") {
       return {
         statusCode: 400,
