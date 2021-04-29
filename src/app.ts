@@ -2,7 +2,6 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import firebase from "firebase-admin";
 import mongoose from "mongoose";
 
 // env config

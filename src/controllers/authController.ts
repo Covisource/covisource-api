@@ -1,6 +1,5 @@
 import express from "express";
 import { userSchema } from "../schemas/userSchema";
-import { db, auth } from "../util/firebase";
 import { Helper_newUser_POST } from "../helper/authHelper";
 
 export const newUser_POST = async (
@@ -24,16 +23,16 @@ export const newUser_POST = async (
 
   //  If the Account Exists function returns anything, return json
 
-  const fsRes = await db.collection("users").doc(user.uid).get();
-  const accountExists = helper.accountExists(fsRes);
+  // const fsRes = await db.collection("users").doc(user.uid).get();
+  // const accountExists = helper.accountExists(fsRes);
 
-  if (accountExists?.code) {
-    return next({
-      statusCode: accountExists.statusCode,
-      code: accountExists.code,
-      message: accountExists.message,
-    });
-  }
+  // if (accountExists?.code) {
+  //   return next({
+  //     statusCode: accountExists.statusCode,
+  //     code: accountExists.code,
+  //     message: accountExists.message,
+  //   });
+  // }
 
 
   // stuff that happens after all checks pass

@@ -34,23 +34,21 @@ export class Helper_newUser_POST {
     }
   };
 
-  accountExists = (
-    fsRes: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
-  ) => {
-    console.log(fsRes);
-    if (fsRes.exists && this.mode === "social") {
-      return {
-        statusCode: 400,
-        code: "social_acc_exist",
-        message:
-          "Account from social provider already exists, creation not required.",
-      };
-    } else if (fsRes.exists && this.mode !== "social") {
-      return {
-        statusCode: 400,
-        code: "acc_exist",
-        message: "This account already exists.",
-      };
-    }
+  accountExists = () => {
+    // console.log(fsRes);
+    // if (fsRes.exists && this.mode === "social") {
+    //   return {
+    //     statusCode: 400,
+    //     code: "social_acc_exist",
+    //     message:
+    //       "Account from social provider already exists, creation not required.",
+    //   };
+    // } else if (fsRes.exists && this.mode !== "social") {
+    //   return {
+    //     statusCode: 400,
+    //     code: "acc_exist",
+    //     message: "This account already exists.",
+    //   };
+    // }
   };
 }
