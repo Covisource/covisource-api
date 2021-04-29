@@ -22,14 +22,6 @@ const userSchema = new schema({
       },
     },
   ],
-  usesIP: {
-    type: Boolean,
-    required: false,
-  },
-  IP: {
-    type: String,
-    required: false,
-  },
   isBlocked: {
     type: Boolean,
     required: false,

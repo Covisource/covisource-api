@@ -11,8 +11,18 @@ const resourceSchema = new schema({
     required: false,
   },
   creator: {
-    type: mongoose.Types.ObjectId,
-    required: [true, "Creator is required"],
+    createdByIp: {
+      type: Boolean,
+      required: false,
+    },
+    Ip: {
+      type: String,
+      required: false,
+    },
+    userId: {
+      type: mongoose.Types.ObjectId,
+      required: false,
+    },
   },
   category: {
     type: mongoose.Types.ObjectId,
