@@ -18,7 +18,7 @@ app.use(
 );
 
 // routers
-import { get404 } from "./controllers/errorController";
+import { errorHandler, get404 } from "./controllers/errorController";
 import indexRouter from "./routes/index";
 import authRouter from "./routes/auth";
 
@@ -29,5 +29,6 @@ app.use(bodyParser.json());
 app.use(indexRouter);
 app.use("/auth", authRouter);
 app.use(get404);
+app.use(errorHandler);
 
 app.listen(process.env.PORT || 8080);
