@@ -16,11 +16,6 @@ const userSchema = new Schema({
     required: false,
     unique: true,
   },
-  username: {
-    type: String,
-    required: false,
-    unique: true,
-  },
   resources: [
     {
       id: {

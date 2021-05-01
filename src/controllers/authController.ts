@@ -10,7 +10,6 @@ export const newUserController = async (
     id: any;
     name: string;
     email: string;
-    username?: string;
     provider: string;
   }
 
@@ -22,7 +21,6 @@ export const newUserController = async (
       $or: [
         { id: `${user.provider}_${user.id}` },
         { email: user.email },
-        { username: user.username },
       ],
     });
     if (res) {
@@ -45,7 +43,6 @@ export const newUserController = async (
     id: `${user.provider}_${user.id}`,
     name: user.name,
     email: user.email,
-    username: user.username || "",
     resources: [],
     reputation: 0,
   });
