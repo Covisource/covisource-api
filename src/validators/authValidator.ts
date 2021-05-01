@@ -7,7 +7,7 @@ export const newUserValidator = async (
 ) => {
   const { user, mode } = req.body;
 
-  if (!user || !mode) {
+  if (!user) {
     return next({
       statusCode: 400,
       code: "params_insufficient",
@@ -15,15 +15,7 @@ export const newUserValidator = async (
     });
   }
 
-  if (!user.uid) {
-    return next({
-      statusCode: 400,
-      code: "bad_data",
-      message: "Make sure the data is valid.",
-    });
-  }
-
-  if (mode !== "social" && mode !== "email") {
+  if (!user.id || !user.name || !user.email || !user.provider) {
     return next({
       statusCode: 400,
       code: "bad_data",

@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const userSchema = new schema({
+const userSchema = new Schema({
+  id: {
+    type: String,
+    required: [true, "Custom ID is required"],
+    unique: true,
+  },
   name: {
     type: String,
     required: [true, "Name is required"],
@@ -9,10 +14,12 @@ const userSchema = new schema({
   email: {
     type: String,
     required: false,
+    unique: true,
   },
-  provider: {
+  username: {
     type: String,
-    required: [true, "Social Provider is required"],
+    required: false,
+    unique: true,
   },
   resources: [
     {

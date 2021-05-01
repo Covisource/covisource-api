@@ -6,27 +6,65 @@ export const newUserController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { user, mode } = req.body;
-  const UserModel = new userModel();
+  interface userSchema {
+    id: any;
+    name: string;
+    email: string;
+    username?: string;
+    provider: string;
+  }
 
-  res.json("you made it!")
+  const user: userSchema = req.body.user;
 
-  // IF YOU GET AN ERROR HERE JUST DONT FREAK OUT ITS SUPPOSED TO HAPPEN ;-;
-
-  //  If the Account Exists function returns anything, return json
-
-  // const accountExists = helper.accountExists(fsRes);
-
-  // if (accountExists?.code) {
-  //   return next({
-  //     statusCode: accountExists.statusCode,
-  //     code: accountExists.code,
-  //     message: accountExists.message,
-  //   });
-  // }
-
-  // stuff that happens after all checks pass
+  // check to see if user already exists
+  try {
+    const res = await userModel.findOne({
+      $or: [
+        { id: `${user.provider}_${user.id}` },
+        { email: user.email },
+        { username: user.username },
+      ],
+    });
+    if (res) {
+      return next({
+        message: "User already exists",
+        statusCode: 409,
+        code: "user_exists",
+      });
+    }
+  } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
 
   // create a new user
-  // send back a jwt
+  const newUser = new userModel({
+    id: `${user.provider}_${user.id}`,
+    name: user.name,
+    email: user.email,
+    username: user.username || "",
+    resources: [],
+    reputation: 0,
+  });
+
+  try {
+    const userSaveRes = await newUser.save();
+    if (userSaveRes) {
+      return res.status(200).json({
+        message: "Sucessfully created a new user",
+        code: "create_success",
+        success: true,
+        data: userSaveRes,
+      });
+    }
+  } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
 };
