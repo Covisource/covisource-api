@@ -3,8 +3,9 @@ import express from "express";
 const router = express.Router();
 
 // controllers
-import { newUser_POST } from "../controllers/authController";
+import { newUserController } from "../controllers/authController";
+import { newUserValidator } from "../validators/authValidator";
 
-router.post("/newUser", newUser_POST);
+router.post("/newUser", newUserValidator, newUserController);
 
 export default router;
