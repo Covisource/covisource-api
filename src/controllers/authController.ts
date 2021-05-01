@@ -20,6 +20,8 @@ export const newUser_POST = async (
     });
   }
 
+  // IF YOU GET AN ERROR HERE JUST DONT FREAK OUT ITS SUPPOSED TO HAPPEN ;-;
+
   //  If the Account Exists function returns anything, return json
 
   // const fsRes = await db.collection("users").doc(user.uid).get();
@@ -36,14 +38,6 @@ export const newUser_POST = async (
 
   // stuff that happens after all checks pass
 
-  // await db
-  //   .collection("users")
-  //   .doc(user.uid)
-  //   .set({
-  //     name: user.displayName,
-  //     provider: "email",
-  //     email: user.email || "",
-  //     reputation: 0,
-  //     removedPosts: 0,
-  //   } as userSchema);
+  // create a new user
+  // send back a jwt
 };
