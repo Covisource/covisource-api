@@ -26,21 +26,6 @@ app.use(
 // BODYPARSER INIT
 app.use(bodyParser.json());
 
-// PASSPORT INIT
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// invoked when user logs in - serializes user and stores session cookie
-passport.serializeUser(function (user: any, cb: any) {
-  cb(null, user);
-});
-
-// invoked on each request - used to obtain credential from incoming cookie
-passport.deserializeUser(function (obj: any, cb: any) {
-  cb(null, obj);
-});
-
 // ROUTES
 
 app.use(indexRouter);
