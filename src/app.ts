@@ -24,7 +24,13 @@ app.use(
 );
 
 // BODYPARSER INIT
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 // ROUTES
 
