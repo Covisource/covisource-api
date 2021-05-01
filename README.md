@@ -14,4 +14,5 @@ The API server for the Covisource platform.
    - `PORT` - Houses the port to run the server on
    - `REQUEST_ALLOWED_URL` - The url to allow requests from (client)
    - `ENVIRONMENT` - The state of the environment ("DEV" | "PROD")
-   - `DB_URL` - e.g https://{project_id}-default-rtdb.firebaseio.com (copy this from the service account settings on your firebase project)
+   - `MONGO_URI` - Mongo DB Connection String
+   - `JWT_SECRET` - The Random String used to decode JWT's (This must be the same as the counterpart in the client repository, if you are using it)
