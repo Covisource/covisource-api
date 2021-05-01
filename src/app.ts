@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 // ROUTERS
 import { errorHandler, get404 } from "./controllers/errorController";
-import indexRouter from "./routes/index";
+import indexRouter from "./routes/indexRouter";
 import authRouter from "./routes/authRouter";
 import oauthRouter from "./routes/oauthRouter";
 

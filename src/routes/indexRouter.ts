@@ -3,8 +3,8 @@ import express from "express";
 const router = express.Router();
 
 // controllers
-import { home } from "../controllers/index";
+import { index } from "../controllers/indexController";
 
-router.get("/", home);
+router.get("/", index);
 
 export default router;
