@@ -9,7 +9,6 @@ import dotenv from "dotenv";
 import { errorHandler, get404 } from "./controllers/errorController";
 import indexRouter from "./routes/indexRouter";
 import authRouter from "./routes/authRouter";
-import oauthRouter from "./routes/oauthRouter";
 
 const app = express();
 
@@ -24,13 +23,18 @@ app.use(
 );
 
 // BODYPARSER INIT
-app.use(bodyParser.json());
+
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 // ROUTES
 
 app.use(indexRouter);
 app.use("/auth", authRouter);
-app.use("/oauth", oauthRouter);
 
 app.use(get404);
 app.use(errorHandler);

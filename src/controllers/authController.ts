@@ -1,43 +1,67 @@
 import express from "express";
-import { Helper_newUser_POST } from "../helper/authHelper";
+import userModel from "../models/userModel";
 
-export const newUser_POST = async (
+export const newUserController = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { user, mode } = req.body;
-  const helper = new Helper_newUser_POST(user, mode);
+  interface userSchema {
+    id: any;
+    name: string;
+    email: string;
+    provider: string;
+  }
 
-  // If the Data Validation function returns anything, return json
-  const validateData = helper.validateData();
+  const user: userSchema = req.body.user;
 
-  if (validateData?.code) {
+  // check to see if user already exists
+  try {
+    const res = await userModel.findOne({
+      $or: [
+        { id: `${user.provider}_${user.id}` },
+        { email: user.email },
+      ],
+    });
+    if (res) {
+      return next({
+        message: "User already exists",
+        statusCode: 409,
+        code: "user_exists",
+      });
+    }
+  } catch (err) {
     return next({
-      statusCode: validateData.statusCode,
-      code: validateData.code,
-      message: validateData.message,
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
     });
   }
 
-  // IF YOU GET AN ERROR HERE JUST DONT FREAK OUT ITS SUPPOSED TO HAPPEN ;-;
-
-  //  If the Account Exists function returns anything, return json
-
-  // const fsRes = await db.collection("users").doc(user.uid).get();
-  // const accountExists = helper.accountExists(fsRes);
-
-  // if (accountExists?.code) {
-  //   return next({
-  //     statusCode: accountExists.statusCode,
-  //     code: accountExists.code,
-  //     message: accountExists.message,
-  //   });
-  // }
-
-
-  // stuff that happens after all checks pass
-
   // create a new user
-  // send back a jwt
+  const newUser = new userModel({
+    id: `${user.provider}_${user.id}`,
+    name: user.name,
+    email: user.email,
+    resources: [],
+    reputation: 0,
+  });
+
+  try {
+    const userSaveRes = await newUser.save();
+    if (userSaveRes) {
+      return res.status(200).json({
+        message: "Sucessfully created a new user",
+        code: "create_success",
+        success: true,
+        data: userSaveRes,
+      });
+    }
+  } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
 };
