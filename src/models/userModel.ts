@@ -20,6 +20,7 @@ const userSchema = new Schema({
     {
       id: {
         type: mongoose.Types.ObjectId,
+        ref: "Resource",
         required: [true, "Resource Id is required"],
       },
     },

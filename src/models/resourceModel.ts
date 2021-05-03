@@ -21,26 +21,27 @@ const resourceSchema = new schema({
     },
     userId: {
       type: mongoose.Types.ObjectId,
+      ref: "User",
       required: false,
     },
   },
   category: {
     type: mongoose.Types.ObjectId,
+    ref: "Category",
     required: [true, "Category is required"],
   },
   location: {
-    state: {
-      type: String,
-      required: [true, "Location->State is required"],
-    },
-    city: {
-      type: String,
-      required: [true, "Location->City is required"],
-    },
-    subCity: {
-      type: String,
-      required: false,
-    },
+    type: mongoose.Types.ObjectId,
+    ref: "City",
+    required: [true, "Location is required"],
+  },
+  price: {
+    type: String,
+    required: false,
+  },
+  phone: {
+    type: String,
+    required: [true, "Phone Number is required"],
   },
 });
 
