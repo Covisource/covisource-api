@@ -1,4 +1,5 @@
 import express from "express";
+import cityModel from "../models/cityModel";
 
 // search for areas
 export const searchController = (
@@ -6,5 +7,5 @@ export const searchController = (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  return res.json(req.params.query);
+  
 };
