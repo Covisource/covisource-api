@@ -5,7 +5,7 @@ export const newUserValidator = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { user, mode } = req.body;
+  const { user } = req.body;
 
   if (!user) {
     return next({
