@@ -16,6 +16,6 @@ const citySchema = new Schema({
   },
 });
 
-citySchema.index({ name: "text", city: "text" });
+citySchema.index({ city: "text" });
 
 export default mongoose.model("City", citySchema);
