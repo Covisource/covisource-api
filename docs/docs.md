@@ -1,14 +1,14 @@
 # Covisource API docs
 
-#### GET /
+### GET /
 
 Returns a welcome greeting
 
-#### GET /secretRoute
+### GET /secretRoute
 
 If authenticated returns authenticated
 
-#### POST /newUser
+### POST /newUser
 
 A route to make new users.
 
