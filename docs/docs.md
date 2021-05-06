@@ -11,6 +11,7 @@ If authenticated returns authenticated
 #### POST /newUser
 
 A route to make new users.
+
 PARAMETERS
 
 ```
