@@ -16,18 +16,24 @@ export default async function (
   }
 
   try {
-    const verifiedToken = jwt.verify(
-      token,
-      "hi"
-    );
-    console.log(verifiedToken);
+    const verifiedToken: any = jwt.verify(token, "hi");
+
+    if (!verifiedToken.id) {
+      return next({
+        message: "The token does not have sufficient parameters.",
+        statusCode: 400,
+        code: "bad_jwt",
+      });
+    }
+
+    (req as any).userId = verifiedToken;
   } catch (err) {
     return next({
       message: err.message,
       statusCode: 500,
-      code: "server_err",
+      code: "jwt_err",
     });
   }
 
-  next()
+  return next();
 }
