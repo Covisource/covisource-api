@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import pointSchema from "./pointSchema";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -35,6 +36,10 @@ const userSchema = new Schema({
   },
   removedPosts: {
     type: Number,
+    required: false,
+  },
+  location: {
+    type: pointSchema,
     required: false,
   },
 });
