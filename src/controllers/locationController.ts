@@ -44,7 +44,12 @@ export const getHereOauthTokenController = (
       console.log(hereRes);
       console.log(body);
       const result = JSON.parse(hereRes.body);
-      return res.json(result);
+      return res.status(200).json({
+        code: "success",
+        success: true,
+        message: "Retrieved access token for here api",
+        data: { ...result },
+      });
     }
   );
 };
