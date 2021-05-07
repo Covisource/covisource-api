@@ -6,7 +6,7 @@ Returns a welcome greeting
 
 ### GET /secretRoute
 
-If authenticated returns authenticated
+This is a test route. If authenticated returns authenticated
 
 ### POST /newUser
 
@@ -15,7 +15,9 @@ A route to make new users.
 PARAMETERS
 
 ```
-    name: string
-    email: string
-    provider: string
+    id - The Users Id that the provider gave
+    name - The Users Name
+    email - The Users Email
+    provider - The Provider the user signed up with
+    
 ```
