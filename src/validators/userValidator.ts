@@ -51,6 +51,21 @@ export const setUserLocationValidator = async (
     });
   }
 
+  console.log(coordinates);
+
+  if (
+    coordinates.lat > 90 ||
+    coordinates.lat < -90 ||
+    coordinates.long > 180 ||
+    coordinates.long < -180
+  ) {
+    return next({
+      statusCode: 400,
+      code: "bad_data",
+      message: "Invalid Coordinate Range",
+    });
+  }
+
   // All checks pass, go to next middleware
 
   return next();
