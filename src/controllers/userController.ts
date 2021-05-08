@@ -18,10 +18,7 @@ export const newUserController = async (
   // check to see if user already exists
   try {
     const res = await userModel.findOne({
-      $or: [
-        { id: `${user.provider}_${user.id}` },
-        { email: user.email },
-      ],
+      $or: [{ id: `${user.provider}_${user.id}` }, { email: user.email }],
     });
     if (res) {
       return next({
@@ -64,4 +61,25 @@ export const newUserController = async (
       code: "mongo_err",
     });
   }
+};
+
+export const setUserLocationController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { coordinates } = req.body;
+  const userId = (req as any).userId;
+  console.log(userId);
+  const mongoRes = await userModel.findOneAndUpdate(
+    { id: userId },
+    {
+      location: {
+        type: "Point",
+        coordinates: [coordinates.long, coordinates.lat],
+      },
+    }
+  ); // mongoRes only houses the state of the document before the update
+
+  res.json(mongoRes);
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import userModel from "../models/userModel";
 
 export default async function (
   req: express.Request,
@@ -26,7 +27,17 @@ export default async function (
       });
     }
 
-    (req as any).userId = verifiedToken;
+    const res = await userModel.findOne({ id: verifiedToken.id });
+    console.log(res);
+    if (!res) {
+      return next({
+        message: "Invalid Token Id",
+        statusCode: 400,
+        code: "bad_jwt",
+      });
+    }
+
+    (req as any).userId = verifiedToken.id;
   } catch (err) {
     return next({
       message: err.message,
