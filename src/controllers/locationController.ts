@@ -40,9 +40,6 @@ export const getHereOauthTokenController = (
       headers: oauth.toHeader(oauth.authorize(request_data)),
     },
     function (err: any, hereRes: any, body: any) {
-      console.log(err);
-      console.log(hereRes);
-      console.log(body);
       const result = JSON.parse(hereRes.body);
       return res.status(200).json({
         code: "success",

@@ -1,23 +1,37 @@
 # Covisource API docs
 
-### GET /
+### **GET `/`**
 
 Returns a welcome greeting
 
-### GET /secretRoute
+### **GET `/secretRoute`**
 
 This is a test route. If authenticated returns authenticated
 
-### POST /newUser
+### **POST `/user/newUser`**
 
 A route to make new users.
 
-PARAMETERS
+#### **Body:**
 
-```
-    id - The Users Id that the provider gave
-    name - The Users Name
-    email - The Users Email
-    provider - The Provider the user signed up with
-    
-```
+##### **id** - The Users Id that the provider gave
+
+##### **name** - The Users Name
+
+##### **email** - The Users Email
+
+##### **provider** - The Provider the user signed up with
+
+<br>
+
+### **POST `user/setUserLocation`**
+
+Route to set a users location
+
+#### **Body:**
+
+##### **coordinates** - The Users Coordinates { long: num, lat: num }
+
+#### **Headers:**
+
+##### **Authorization** - The Users JWT
