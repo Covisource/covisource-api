@@ -1,19 +1,23 @@
 import express from "express";
 import resourceModel from "../models/resourceModel";
+import ipware from "ipware";
 
-export const newResourceController = async (
+const newResourceController = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  interface resourceSchema {
-    author: string;
+  interface resourceInterface {
+    userId: any;
     title: string;
     description: string;
-    upvotes: number;
+    category: number;
+    location: number;
+    price: string;
+    phone: string;
   }
 
-  const resource: resourceSchema = req.body.user;
+  const resource: resourceInterface = req.body.user;
 
   // check to see if user already exists
   try {
@@ -38,10 +42,19 @@ export const newResourceController = async (
     });
   }
 
+  const ip = ipware.get_ip(req);
+
   const newResource = new resourceModel({
-    author: resource.author,
     title: resource.title,
     description: resource.description,
+    creator: {
+      Ip: ip,
+      userId: resource.userId,
+    },
+    category: resource.category,
+    location: resource.location,
+    price: resource.price,
+    phone: resource.phone,
   });
 
   try {
@@ -62,3 +75,5 @@ export const newResourceController = async (
     });
   }
 };
+
+export default newResourceController;
