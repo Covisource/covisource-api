@@ -72,6 +72,7 @@ export const fetchUserController = async (
   try {
     const mongoRes = await userModel.findOne({ id: userId });
     return res.json({
+      success: true,
       message: "Resource retrieved successfully.",
       statusCode: 200,
       code: "retrieve_success",
