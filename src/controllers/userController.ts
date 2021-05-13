@@ -63,6 +63,29 @@ export const newUserController = async (
   }
 };
 
+export const fetchUserController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const userId = (req as any).userId;
+  try {
+    const mongoRes = await userModel.findOne({ id: userId });
+    return res.json({
+      message: "Resource retrieved successfully.",
+      statusCode: 200,
+      code: "retrieve_success",
+      data: mongoRes,
+    });
+  } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
+};
+
 export const setUserLocationController = async (
   req: express.Request,
   res: express.Response,
