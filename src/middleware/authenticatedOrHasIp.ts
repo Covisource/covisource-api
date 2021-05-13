@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-const ipware = require("ipware");
+import RequestIp from "@supercharge/request-ip";
 
 // models
 import userModel from "../models/userModel";
@@ -12,7 +12,13 @@ export default async function (
 ) {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    const ip = ipware.get_ip(req);
+    const ip =
+      (
+        (req.headers["X-Forwarded-For"] ||
+          req.headers["x-forwarded-for"] ||
+          "") as any
+      ).split(",")[0] || req.socket.remoteAddress;
+    console.log(ip);
     if (ip) {
       (req as any).extractedIp = ip;
     } else {

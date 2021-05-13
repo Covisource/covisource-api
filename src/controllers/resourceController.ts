@@ -6,52 +6,27 @@ const newResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  interface resourceInterface {
-    userId: any;
-    title: string;
-    description: string;
-    category: number;
-    location: number;
-    price: string;
-    phone: string;
-  }
+  const { userId } = req as any;
+  const { extractedIp } = req as any;
 
-  const resource: resourceInterface = req.body.user;
+  const { resource } = req.body;
 
-  // check to see if user already exists
-  try {
-    const res = await resourceModel.findOne({
-      $or: [
-        { title: `{resource.title}` },
-        { description: `{resource.description}` },
-      ],
-    });
-    if (res) {
-      return next({
-        message: "Resource with same title/description already exists",
-        statusCode: 409,
-        code: "resource_exists",
-      });
-    }
-  } catch (err) {
-    return next({
-      message: err.message,
-      statusCode: 500,
-      cde: "mongo_err",
-    });
-  }
-
-  const newResource = new resourceModel({
-    title: resource.title,
-    description: resource.description,
+  const resourceObj = {
     creator: {
-      userId: resource.userId,
+      createdByIp: !userId,
     },
+    title: resource.title,
     category: resource.category,
     location: resource.location,
-    price: resource.price,
     phone: resource.phone,
-  });
+  };
+
+  if (userId) (resourceObj as any).creator.userId = userId;
+  if (extractedIp) (resourceObj as any).creator.Ip = extractedIp;
+  if (resource.description) (resourceObj as any).description = resource.description;
+  if (resource.price) (resourceObj as any).price = resource.price;
+
+  const newResource = new resourceModel(resourceObj);
 
   try {
     const resourceSaveRes = await newResource.save();
