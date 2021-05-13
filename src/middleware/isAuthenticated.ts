@@ -28,7 +28,7 @@ export default async function (
     }
 
     const res = await userModel.findOne({ id: verifiedToken.id });
-    console.log(res);
+    
     if (!res) {
       return next({
         message: "Invalid Token Id",

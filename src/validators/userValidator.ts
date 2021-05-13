@@ -33,9 +33,9 @@ export const setUserLocationValidator = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { coordinates } = req.body;
+  const { coordinates, displayName } = req.body;
 
-  if (!coordinates) {
+  if (!coordinates || !displayName) {
     return next({
       statusCode: 400,
       code: "params_insufficient",
@@ -51,7 +51,6 @@ export const setUserLocationValidator = async (
     });
   }
 
-  console.log(coordinates);
 
   if (
     coordinates.lat > 90 ||

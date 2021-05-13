@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import pointSchema from "./pointSchema";
+import locationSchema from "./locationSchema";
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -39,7 +40,7 @@ const userSchema = new Schema({
     required: false,
   },
   location: {
-    type: pointSchema,
+    type: locationSchema,
     required: false,
   },
 });
