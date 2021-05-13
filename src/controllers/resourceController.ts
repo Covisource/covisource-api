@@ -1,6 +1,5 @@
 import express from "express";
 import resourceModel from "../models/resourceModel";
-import ipware from "ipware";
 
 const newResourceController = async (
   req: express.Request,
@@ -42,12 +41,12 @@ const newResourceController = async (
     });
   }
 
-  const ip = ipware.get_ip(req);
 
   const newResource = new resourceModel({
     title: resource.title,
     description: resource.description,
     creator: {
+
       Ip: ip,
       userId: resource.userId,
     },
