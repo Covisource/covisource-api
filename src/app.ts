@@ -10,6 +10,7 @@ import { errorHandler, get404 } from "./controllers/errorController";
 import indexRouter from "./routes/indexRouter";
 import userRouter from "./routes/userRouter";
 import locationRouter from "./routes/locationRouter";
+import resourceRouter from "./routes/resourceRouter";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(
 app.use(indexRouter);
 app.use("/user", userRouter);
 app.use("/location", locationRouter);
+app.use("/resource", resourceRouter);
 
 app.use(get404);
 app.use(errorHandler);

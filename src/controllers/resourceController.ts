@@ -41,13 +41,10 @@ const newResourceController = async (
     });
   }
 
-
   const newResource = new resourceModel({
     title: resource.title,
     description: resource.description,
     creator: {
-
-      Ip: ip,
       userId: resource.userId,
     },
     category: resource.category,
