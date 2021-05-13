@@ -51,7 +51,6 @@ export const setUserLocationValidator = async (
     });
   }
 
-
   if (
     coordinates.lat > 90 ||
     coordinates.lat < -90 ||
