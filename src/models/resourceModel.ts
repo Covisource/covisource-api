@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import locationSchema from "./locationSchema";
 const schema = mongoose.Schema;
 
 const resourceSchema = new schema({
@@ -13,7 +14,10 @@ const resourceSchema = new schema({
   creator: {
     createdByIp: {
       type: Boolean,
-      required: [true, "Mention if the resource was created from an authenticated user or not."],
+      required: [
+        true,
+        "Mention if the resource was created from an authenticated user or not.",
+      ],
     },
     Ip: {
       type: String,
@@ -31,9 +35,8 @@ const resourceSchema = new schema({
     required: [true, "Category is required"],
   },
   location: {
-    type: mongoose.Types.ObjectId,
-    ref: "City",
-    required: [true, "Location is required"],
+    type: locationSchema,
+    required: [true, "Location of resource is required"],
   },
   price: {
     type: String,
