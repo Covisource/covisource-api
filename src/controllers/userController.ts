@@ -72,6 +72,7 @@ export const fetchUserController = async (
   try {
     const mongoRes = await userModel.findOne({ id: userId });
     return res.json({
+      success: true,
       message: "Resource retrieved successfully.",
       statusCode: 200,
       code: "retrieve_success",
@@ -91,9 +92,8 @@ export const setUserLocationController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { coordinates } = req.body;
+  const { coordinates, displayName } = req.body;
   const userId = (req as any).userId;
-  console.log(userId);
 
   try {
     const mongoRes = await userModel.findOneAndUpdate(
@@ -101,6 +101,7 @@ export const setUserLocationController = async (
       {
         location: {
           type: "Point",
+          displayName,
           coordinates: [coordinates.long, coordinates.lat],
         },
       }

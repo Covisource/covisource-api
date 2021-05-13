@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const pointSchema = new Schema({
+const locationSchema = new Schema({
   type: {
     type: String,
     enum: ["Point"],
     required: true,
+  },
+  displayName: {
+    type: String,
+    required: [true, "Location Display Name Is Required"],
   },
   coordinates: {
     type: [Number],
@@ -13,4 +17,4 @@ const pointSchema = new Schema({
   },
 });
 
-export default pointSchema;
+export default locationSchema;
