@@ -21,6 +21,7 @@ export const newUserController = async (
       $or: [{ id: `${user.provider}_${user.id}` }, { email: user.email }],
     });
     if (res) {
+      console.log("New User Controller: User already exists")
       return next({
         message: "User already exists",
         statusCode: 409,
@@ -28,6 +29,7 @@ export const newUserController = async (
       });
     }
   } catch (err) {
+    console.log(err.message);
     return next({
       message: err.message,
       statusCode: 500,

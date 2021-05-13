@@ -17,11 +17,7 @@ const app = express();
 dotenv.config();
 
 // CORS CONFIG
-app.use(
-  cors({
-    origin: process.env.REQUEST_ALLOWED_URL,
-  })
-);
+app.use(cors());
 
 // BODYPARSER INIT
 
