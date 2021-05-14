@@ -12,18 +12,23 @@ const newResourceController = async (
   const { resource } = req.body;
 
   const resourceObj = {
-    creator: {
-      createdByIp: !userId,
-    },
     title: resource.title,
     category: resource.category,
-    location: resource.location,
+    location: {
+      type: "Point",
+      displayName: resource.location.displayName,
+      coordinates: [
+        resource.location.coordinates.lat,
+        resource.location.coordinates.long,
+      ],
+    },
     phone: resource.phone,
   };
 
   if (userId) (resourceObj as any).creator.userId = userId;
   if (extractedIp) (resourceObj as any).creator.Ip = extractedIp;
-  if (resource.description) (resourceObj as any).description = resource.description;
+  if (resource.description)
+    (resourceObj as any).description = resource.description;
   if (resource.price) (resourceObj as any).price = resource.price;
 
   const newResource = new resourceModel(resourceObj);

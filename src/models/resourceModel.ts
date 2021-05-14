@@ -12,13 +12,6 @@ const resourceSchema = new schema({
     required: false,
   },
   creator: {
-    createdByIp: {
-      type: Boolean,
-      required: [
-        true,
-        "Mention if the resource was created from an authenticated user or not.",
-      ],
-    },
     Ip: {
       type: String,
       required: false,
