@@ -21,7 +21,7 @@ export const newUserController = async (
       $or: [{ id: `${user.provider}_${user.id}` }, { email: user.email }],
     });
     if (res) {
-      console.log("New User Controller: User already exists")
+      console.log("New User Controller: User already exists");
       return next({
         message: "User already exists",
         statusCode: 409,
@@ -70,21 +70,13 @@ export const fetchUserController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const userId = (req as any).userId;
-  try {
-    const mongoRes = await userModel.findOne({ id: userId });
-    return res.json({
-      success: true,
-      message: "Resource retrieved successfully.",
-      statusCode: 200,
-      code: "retrieve_success",
-      data: mongoRes,
-    });
-  } catch (err) {
-    return next({
-      message: err.message,
-      statusCode: 500,
-      code: "mongo_err",
-    });
-  }
+  const { user } = req as any;
+  
+  return res.json({
+    success: true,
+    message: "Resource retrieved successfully.",
+    statusCode: 200,
+    code: "retrieve_success",
+    data: user,
+  });
 };

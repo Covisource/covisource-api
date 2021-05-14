@@ -47,7 +47,7 @@ export default async function (
       });
     }
 
-    (req as any).userId = verifiedToken.id;
+    (req as any).user = res
   } catch (err) {
     return next({
       message: err.message,
