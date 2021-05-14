@@ -1,5 +1,7 @@
 # Covisource API docs
 
+`* Indicates a required parameter`
+
 ### **GET `/`**
 
 Returns a welcome greeting
@@ -10,13 +12,15 @@ A route to make new users.
 
 #### **Body:**
 
-##### **id** - The Users Id that the provider gave
+##### **\*user**
 
-##### **name** - The Users Name
+- ##### **\*id** - The Users Id that the provider gave
 
-##### **email** - The Users Email
+- ##### **\*name** - The Users Name
 
-##### **provider** - The Provider the user signed up with
+- ##### **\*email** - The Users Email
+
+- ##### **\*provider** - The Provider the user signed up with
 
 <br>
 
@@ -26,7 +30,37 @@ A route to make new categories. The user must be of admin level to utilize this 
 
 #### **Body:**
 
-##### **name** - The Category Name
+##### **\*name** - The Category Name
+
+#### **Headers:**
+
+##### **\*Authorization** - The users JWT (e.g: token JWT_TOKEN)
+
+<br>
+
+### **POST `/resource/newResource`**
+
+A route to make new resources.
+
+#### **Body:**
+
+##### **\*resource**
+
+- ##### **\*title** - The Resource Title
+
+- ##### **\*category** - The Object ID of the category this resource belongs to
+
+- ##### **\*phone** - The Contact Number of the vendor
+
+- ##### **\*location**
+
+  - ##### **\*displayName** - The User Readable Address
+  - ##### **\*coordinates**
+    - ##### **\*lat** - Latitude
+    - ##### **\*long** - Longitude
+
+- ##### **description** - The Resource Description
+- ##### **price** - The Price of the Resource
 
 #### **Headers:**
 
