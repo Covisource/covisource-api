@@ -8,6 +8,7 @@ export const newCategoryValidator = async (
   next: express.NextFunction
 ) => {
   const { name } = req.body;
+  const { user } = req as any;
 
   if (!name) {
     return next({
@@ -17,22 +18,31 @@ export const newCategoryValidator = async (
     });
   }
 
+  if (!user.admin) {
+    return next({
+      statusCode: 401,
+      code: "unauthorized",
+      message: "You aren't authorized to perform this action",
+    });
+  }
+
   try {
-    const queryRes = await userModel.findOne({ id: (req as any).userId });
-    if (!(queryRes as any).admin) {
+    const queryRes = await categoryModel.findOne({ name });
+    if (queryRes) {
       return next({
-        statusCode: 401,
-        code: "unauthorized",
-        message: "You aren't authorized to perform this action",
+        statusCode: 400,
+        code: "resource_exists",
+        message: "This resource already exists",
       });
     }
   } catch (err) {
     return next({
+      message: err.message,
       statusCode: 500,
       code: "mongo_err",
-      message: err.message,
     });
   }
+
   // validation succeeds, continue to next middleware
   next();
 };
