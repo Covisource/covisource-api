@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import RequestIp from "@supercharge/request-ip";
+import publicIp from "public-ip";
 
 // models
 import userModel from "../models/userModel";
@@ -12,12 +12,7 @@ export default async function (
 ) {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    const ip =
-      (
-        (req.headers["X-Forwarded-For"] ||
-          req.headers["x-forwarded-for"] ||
-          "") as any
-      ).split(",")[0] || req.socket.remoteAddress;
+    const ip = await publicIp.v6();
     console.log(ip);
     if (ip) {
       (req as any).extractedIp = ip;
