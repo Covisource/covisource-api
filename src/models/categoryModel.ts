@@ -7,5 +7,6 @@ const categorySchema = new schema({
     required: [true, "Name of category is required"],
   },
 });
+categorySchema.index({ name: "text" });
 
 export default mongoose.model("Category", categorySchema);

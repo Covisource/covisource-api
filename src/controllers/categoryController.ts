@@ -25,3 +25,38 @@ export const newCategoryController = async (
     });
   }
 };
+
+export const findCategoryController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { q } = req.query;
+  try {
+    if (q) {
+      const queryRes = await categoryModel.find({
+        $text: { $search: q.toString() },
+      });
+      return res.status(200).json({
+        success: true,
+        code: "retrieve_success",
+        message: "Found results successfully.",
+        data: queryRes,
+      });
+    } else {
+      const queryRes = await categoryModel.find();
+      return res.status(200).json({
+        success: true,
+        code: "retrieve_success",
+        message: "Found all results successfully.",
+        data: queryRes,
+      });
+    }
+  } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
+};
