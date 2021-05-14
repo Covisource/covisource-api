@@ -11,6 +11,7 @@ import indexRouter from "./routes/indexRouter";
 import userRouter from "./routes/userRouter";
 import locationRouter from "./routes/locationRouter";
 import resourceRouter from "./routes/resourceRouter";
+import categoryRouter from "./routes/categoryRouter";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use(indexRouter);
 app.use("/user", userRouter);
 app.use("/location", locationRouter);
 app.use("/resource", resourceRouter);
+app.use("/category", categoryRouter);
 
 app.use(get404);
 app.use(errorHandler);

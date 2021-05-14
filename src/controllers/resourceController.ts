@@ -1,7 +1,7 @@
 import express from "express";
 import resourceModel from "../models/resourceModel";
 
-const newResourceController = async (
+export const newResourceController = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -52,5 +52,3 @@ const newResourceController = async (
     });
   }
 };
-
-export default newResourceController;

@@ -37,7 +37,11 @@ const userSchema = new Schema({
   removedPosts: {
     type: Number,
     required: false,
-  }
+  },
+  admin: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 export default mongoose.model("User", userSchema);
