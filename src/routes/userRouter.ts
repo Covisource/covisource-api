@@ -6,25 +6,14 @@ const router = express.Router();
 import {
   fetchUserController,
   newUserController,
-  setUserLocationController,
 } from "../controllers/userController";
 
 // validators
-import {
-  newUserValidator,
-  setUserLocationValidator,
-} from "../validators/userValidator";
+import { newUserValidator } from "../validators/userValidator";
 
 import isAuthenticated from "../middleware/isAuthenticated";
 
 router.post("/newUser", newUserValidator, newUserController);
-
-router.post(
-  "/setUserLocation",
-  isAuthenticated,
-  setUserLocationValidator,
-  setUserLocationController
-);
 
 router.get("/fetchUser", isAuthenticated, fetchUserController);
 

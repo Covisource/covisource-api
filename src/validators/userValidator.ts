@@ -28,43 +28,43 @@ export const newUserValidator = async (
   return next();
 };
 
-export const setUserLocationValidator = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  const { coordinates, displayName } = req.body;
+// export const setUserLocationValidator = async (
+//   req: express.Request,
+//   res: express.Response,
+//   next: express.NextFunction
+// ) => {
+//   const { coordinates, displayName } = req.body;
 
-  if (!coordinates || !displayName) {
-    return next({
-      statusCode: 400,
-      code: "params_insufficient",
-      message: "Make sure you include the required fields",
-    });
-  }
+//   if (!coordinates || !displayName) {
+//     return next({
+//       statusCode: 400,
+//       code: "params_insufficient",
+//       message: "Make sure you include the required fields",
+//     });
+//   }
 
-  if (!coordinates.long || !coordinates.lat) {
-    return next({
-      statusCode: 400,
-      code: "bad_data",
-      message: "Make sure the data is valid.",
-    });
-  }
+//   if (!coordinates.long || !coordinates.lat) {
+//     return next({
+//       statusCode: 400,
+//       code: "bad_data",
+//       message: "Make sure the data is valid.",
+//     });
+//   }
 
-  if (
-    coordinates.lat > 90 ||
-    coordinates.lat < -90 ||
-    coordinates.long > 180 ||
-    coordinates.long < -180
-  ) {
-    return next({
-      statusCode: 400,
-      code: "bad_data",
-      message: "Invalid Coordinate Range",
-    });
-  }
+//   if (
+//     coordinates.lat > 90 ||
+//     coordinates.lat < -90 ||
+//     coordinates.long > 180 ||
+//     coordinates.long < -180
+//   ) {
+//     return next({
+//       statusCode: 400,
+//       code: "bad_data",
+//       message: "Invalid Coordinate Range",
+//     });
+//   }
 
-  // All checks pass, go to next middleware
+//   // All checks pass, go to next middleware
 
-  return next();
-};
+//   return next();
+// };

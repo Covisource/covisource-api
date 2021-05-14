@@ -23,16 +23,3 @@ A route to make new users.
 ##### **provider** - The Provider the user signed up with
 
 <br>
-
-### **POST `user/setUserLocation`**
-
-Route to set a users location
-
-#### **Body:**
-
-##### **coordinates** - The Users Coordinates { long: num, lat: num }
-##### **displayName** - The textual representation of the location
-
-#### **Headers:**
-
-##### **Authorization** - The Users JWT

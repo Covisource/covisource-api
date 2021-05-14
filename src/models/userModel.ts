@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import locationSchema from "./locationSchema";
 
 const Schema = mongoose.Schema;
 
@@ -38,11 +37,7 @@ const userSchema = new Schema({
   removedPosts: {
     type: Number,
     required: false,
-  },
-  location: {
-    type: locationSchema,
-    required: false,
-  },
+  }
 });
 
 export default mongoose.model("User", userSchema);
