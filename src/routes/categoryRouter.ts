@@ -4,7 +4,7 @@ import express from "express";
 import isAuthenticated from "../middleware/isAuthenticated";
 
 // controllers
-import { newCategoryController } from "../controllers/categoryController";
+import { findCategoryController, newCategoryController } from "../controllers/categoryController";
 
 // validators
 import { newCategoryValidator } from "../validators/categoryValidator";
@@ -17,5 +17,7 @@ router.post(
   newCategoryValidator,
   newCategoryController
 );
+
+router.get("/findCategory", findCategoryController)
 
 export default router;
