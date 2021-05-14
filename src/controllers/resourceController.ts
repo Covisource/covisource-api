@@ -6,7 +6,7 @@ export const newResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { userId } = req as any;
+  const { user } = req as any;
   const { extractedIp } = req as any;
 
   const { resource } = req.body;
@@ -26,7 +26,7 @@ export const newResourceController = async (
     },
   };
 
-  if (userId) (resourceObj as any).creator.userId = userId;
+  if (user._id) (resourceObj as any).creator.userId = user._id;
   if (extractedIp) (resourceObj as any).creator.Ip = extractedIp;
   if (resource.description)
     (resourceObj as any).description = resource.description;

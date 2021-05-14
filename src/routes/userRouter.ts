@@ -13,8 +13,7 @@ import { newUserValidator } from "../validators/userValidator";
 
 import isAuthenticated from "../middleware/isAuthenticated";
 
-router.post("/newUser", newUserValidator, newUserController);
-
 router.get("/fetchUser", isAuthenticated, fetchUserController);
+router.post("/newUser", newUserValidator, newUserController);
 
 export default router;

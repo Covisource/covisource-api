@@ -28,7 +28,7 @@ export default async function (
     }
 
     const res = await userModel.findOne({ id: verifiedToken.id });
-    
+
     if (!res) {
       return next({
         message: "Invalid Token Id",
@@ -36,8 +36,8 @@ export default async function (
         code: "bad_jwt",
       });
     }
-
-    (req as any).userId = verifiedToken.id;
+    
+    (req as any).user = res;
   } catch (err) {
     return next({
       message: err.message,
