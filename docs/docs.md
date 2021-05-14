@@ -24,6 +24,16 @@ A route to make new users.
 
 <br>
 
+### **GET `/user/fetchUser`**
+
+Fetch the details of a user
+
+#### **Headers:**
+
+##### **\*Authorization** - The users JWT (e.g: token JWT_TOKEN)
+
+<br>
+
 ### **POST `/category/newCategory`**
 
 A route to make new categories. The user must be of admin level to utilize this route
