@@ -36,7 +36,7 @@ const resourceSchema = new schema({
     required: false,
   },
   phone: {
-    type: String,
+    type: Number,
     required: [true, "Phone Number is required"],
   },
 });

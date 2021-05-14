@@ -14,6 +14,8 @@ const newResourceController = async (
   const resourceObj = {
     title: resource.title,
     category: resource.category,
+    phone: resource.phone,
+    creator: {}, 
     location: {
       type: "Point",
       displayName: resource.location.displayName,
@@ -22,7 +24,6 @@ const newResourceController = async (
         resource.location.coordinates.long,
       ],
     },
-    phone: resource.phone,
   };
 
   if (userId) (resourceObj as any).creator.userId = userId;
