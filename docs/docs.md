@@ -48,6 +48,16 @@ A route to make new categories. The user must be of admin level to utilize this 
 
 <br>
 
+### **GET `/category/findCategory`**
+
+A route to search for available categories.
+
+#### **Query Params:**
+
+##### **q** - The query string (leave blank to fetch all)
+
+<br>
+
 ### **POST `/resource/newResource`**
 
 A route to make new resources.
@@ -75,14 +85,5 @@ A route to make new resources.
 #### **Headers:**
 
 ##### **Authorization** - The users JWT (e.g: token JWT_TOKEN)
-
-### **GET `/category/findCategory`**
-
-A route to search for available categories.
-
-#### **Query Params:**
-
-##### **q** - The query string (leave blank to fetch all)
-
 
 <br>
