@@ -76,4 +76,13 @@ A route to make new resources.
 
 ##### **Authorization** - The users JWT (e.g: token JWT_TOKEN)
 
+### **GET `/category/findCategory`**
+
+A route to search for available categories.
+
+#### **Query Params:**
+
+##### **q** - The query string (leave blank to fetch all)
+
+
 <br>
