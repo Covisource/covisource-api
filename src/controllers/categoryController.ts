@@ -6,9 +6,9 @@ export const newCategoryController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { name } = req.body;
+  const { name, extraParameters } = req.body;
 
-  const toInsert = new categoryModel({ name });
+  const toInsert = new categoryModel({ name, extraParameters });
 
   try {
     const queryRes = await toInsert.save();
@@ -16,6 +16,7 @@ export const newCategoryController = async (
       success: true,
       code: "create_success",
       message: "Created category successfully.",
+      data: queryRes,
     });
   } catch (err) {
     return next({

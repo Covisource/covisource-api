@@ -7,7 +7,7 @@ export const newCategoryValidator = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { name } = req.body;
+  const { name, extraParameters } = req.body;
   const { user } = req as any;
 
   if (!name) {
@@ -24,6 +24,31 @@ export const newCategoryValidator = async (
       code: "unauthorized",
       message: "You aren't authorized to perform this action",
     });
+  }
+
+  if (extraParameters) {
+    // make sure the extra parameters for the category are valid
+    try {
+      let isOkay = true;
+      extraParameters.forEach((extraParam: any) => {
+        if (!extraParam.name || !extraParam.icon || !extraParam.type) {
+          isOkay = false
+        }
+      })
+      if (!isOkay) {
+        return next({
+          message: "Make sure all the fields are valid.",
+          statusCode: 500,
+          code: "params_insufficient",
+        });
+      }
+    } catch (err) {
+      return next({
+        message: err.message,
+        statusCode: 500,
+        code: "server_err",
+      });
+    }
   }
 
   try {
