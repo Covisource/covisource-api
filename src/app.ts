@@ -60,5 +60,6 @@ db.once("open", function () {
 
 const port = process.env.PORT || 8080;
 app.listen(port, function () {
-  console.log(`listening on port ${port}`);
+  console.log(`Connected to google cloud! listening on port ${port}`);
 });
+
