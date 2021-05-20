@@ -38,8 +38,11 @@ app.use("/location", locationRouter);
 app.use("/resource", resourceRouter);
 app.use("/category", categoryRouter);
 
-app.use("/testroute", (req, res) => {
-  res.json(process.env.ENVIRONMENT);
+app.get("/testroute", (req, res) => {
+  res.json({
+    thingy: process.env.ENVIRONMENT,
+    message: "hi lol",
+  });
 });
 
 app.use(get404);
