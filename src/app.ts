@@ -22,7 +22,6 @@ dotenv.config();
 app.use(cors());
 
 // BODYPARSER INIT
-
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -31,25 +30,16 @@ app.use(
 );
 
 // ROUTES
-
 app.use(indexRouter);
 app.use("/user", userRouter);
 app.use("/location", locationRouter);
 app.use("/resource", resourceRouter);
 app.use("/category", categoryRouter);
 
-app.get("/testroute", (req, res) => {
-  res.json({
-    thingy: process.env.ENVIRONMENT,
-    message: "hi lol",
-  });
-});
-
 app.use(get404);
 app.use(errorHandler);
 
 // MONGOOSE INIT
-
 mongoose.connect(String(process.env.MONGO_URI), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -63,7 +53,6 @@ db.once("open", function () {
 });
 
 // SERVER INIT
-
 const port = process.env.PORT || 8080;
 app.listen(port, function () {
   console.log(`Connected to google cloud! listening on port ${port}`);
