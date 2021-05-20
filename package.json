@@ -6,7 +6,7 @@
   "repository": "https://github.com/Covisource/covisource-api",
   "author": "Aaryaman Maheshwari",
   "license": "Apache-2.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
