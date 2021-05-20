@@ -23,5 +23,3 @@ yarn-error.log*
 # env files
 .env
 
-# gcloud
-**/app.yaml
