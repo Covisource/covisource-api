@@ -40,7 +40,7 @@ app.use("/category", categoryRouter);
 
 app.get("/testroute", (req, res) => {
   res.json({
-    thingy: process.env._ENVIRONMENT,
+    thingy: process.env.ENVIRONMENT,
     message: "hi lol",
   });
 });

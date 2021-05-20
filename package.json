@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
+    "create-env": "printenv > .env",
     "gcp-build": "tsc -p ."
   },
   "dependencies": {

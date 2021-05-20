@@ -1,3 +1,15 @@
 steps:
+  - name: node:10.15.1
+    entrypoint: npm
+    args: ["install"]
+  - name: node:10.15.1
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - "REQUEST_ALLOWED_URL=${_REQUEST_ALLOWED_URL}"
+      - "ENVIRONMENT=${_ENVIRONMENT}"
+      - "MONGO_URI=${_MONGO_URI}"
+      - "JWT_SECRET=${_JWT_SECRET}"
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
+timeout: "1600s"
