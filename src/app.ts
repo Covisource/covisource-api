@@ -38,6 +38,10 @@ app.use("/location", locationRouter);
 app.use("/resource", resourceRouter);
 app.use("/category", categoryRouter);
 
+app.use("/testroute", (req, res) => {
+  res.json(process.env.ENVIRONMENT);
+});
+
 app.use(get404);
 app.use(errorHandler);
 
@@ -55,11 +59,9 @@ db.once("open", function () {
   console.log("Connected to Mongo DB");
 });
 
-
 // SERVER INIT
 
 const port = process.env.PORT || 8080;
 app.listen(port, function () {
   console.log(`Connected to google cloud! listening on port ${port}`);
 });
-
