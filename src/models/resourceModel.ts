@@ -46,7 +46,7 @@ const resourceSchema = new schema({
         required: [true, "Name of the extra parameter is required"],
       },
       value: {
-        type: Boolean,
+        type: schema.Types.Mixed,
         required: [true, "Value of the extra parameter is required"],
       },
     },

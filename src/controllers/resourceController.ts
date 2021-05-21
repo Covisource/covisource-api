@@ -50,11 +50,12 @@ export const newResourceController = async (
   };
 
   // conditonally checking for optional data and inserting it
-  if (user._id) resourceObj.creator.userId = user._id;
+  if (user?._id) resourceObj.creator.userId = user._id;
   if (extractedIp) resourceObj.creator.Ip = extractedIp;
   if (resource.description) resourceObj.description = resource.description;
   if (resource.price) resourceObj.price = resource.price;
-
+  if (resource.extraParameters)
+    resourceObj.extraParameters = resource.extraParameters;
 
   const newResource = new resourceModel(resourceObj);
 
