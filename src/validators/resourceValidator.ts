@@ -1,4 +1,5 @@
 import express from "express";
+import categoryModel from "../models/categoryModel";
 
 export const newResourceValidator = async (
   req: express.Request,
@@ -27,6 +28,45 @@ export const newResourceValidator = async (
       statusCode: 400,
       code: "bad_data",
       message: "Make sure the data is valid.",
+    });
+  }
+
+  // fetching the resource using the id and seeing if the user pased valid extra parameters
+  try {
+    const mongoRes = await categoryModel.findById(resource.category);
+    if (!mongoRes) {
+      return next({
+        message: "Invalid category",
+        statusCode: 400,
+        code: "bad_data",
+      });
+    }
+
+    interface ParamSchema {
+      name: string;
+      isRequired?: boolean;
+    }
+
+    (mongoRes as any).extraParameters?.forEach((categoryParam: ParamSchema) => {
+      if (categoryParam?.isRequired) {
+        const searchRes = (resource.extraParameters as any[])?.find(
+          (resourceParam) => resourceParam.name === categoryParam.name
+        );
+        if (!searchRes?.value) {
+          return next({
+            statusCode: 400,
+            code: "params_insufficient",
+            message: "Make sure you include the required fields",
+          });
+        }
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
     });
   }
 
