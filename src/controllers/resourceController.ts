@@ -11,11 +11,26 @@ export const newResourceController = async (
 
   const { resource } = req.body;
 
-  const resourceObj = {
+  interface CreatorSchema {
+    Ip?: any;
+    userId?: any;
+  }
+
+  interface ResourceSchema {
+    title: string;
+    category: string;
+    phone: string;
+    creator: CreatorSchema;
+    location: any;
+    description?: string;
+    price?: string;
+  }
+
+  const resourceObj: ResourceSchema = {
     title: resource.title,
     category: resource.category,
     phone: resource.phone,
-    creator: {}, 
+    creator: {},
     location: {
       type: "Point",
       displayName: resource.location.displayName,
@@ -26,11 +41,10 @@ export const newResourceController = async (
     },
   };
 
-  if (user._id) (resourceObj as any).creator.userId = user._id;
-  if (extractedIp) (resourceObj as any).creator.Ip = extractedIp;
-  if (resource.description)
-    (resourceObj as any).description = resource.description;
-  if (resource.price) (resourceObj as any).price = resource.price;
+  if (user._id) resourceObj.creator.userId = user._id;
+  if (extractedIp) resourceObj.creator.Ip = extractedIp;
+  if (resource.description) resourceObj.description = resource.description;
+  if (resource.price) resourceObj.price = resource.price;
 
   const newResource = new resourceModel(resourceObj);
 
