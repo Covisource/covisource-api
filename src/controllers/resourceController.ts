@@ -1,4 +1,5 @@
 import express from "express";
+import categoryModel from "../models/categoryModel";
 import resourceModel from "../models/resourceModel";
 
 export const newResourceController = async (
@@ -6,16 +7,38 @@ export const newResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { user } = req as any;
-  const { extractedIp } = req as any;
+  const { user } = req as any; // the logged in user (possibly undefined)
+  const { extractedIp } = req as any; // the users ipv6 address
+  const { resource } = req.body; // the resource the user wishes to insert
 
-  const { resource } = req.body;
+  // schemas for a resource
+  interface ExtraParameterSchema {
+    name: string;
+    value: any;
+  }
 
-  const resourceObj = {
+  interface CreatorSchema {
+    Ip?: any;
+    userId?: any;
+  }
+
+  interface ResourceSchema {
+    title: string;
+    category: any;
+    phone: string;
+    creator: CreatorSchema;
+    location: any;
+    description?: string;
+    price?: string;
+    extraParameters?: ExtraParameterSchema[];
+  }
+
+  // forming the resource to be inserted
+  const resourceObj: ResourceSchema = {
     title: resource.title,
     category: resource.category,
     phone: resource.phone,
-    creator: {}, 
+    creator: {},
     location: {
       type: "Point",
       displayName: resource.location.displayName,
@@ -26,11 +49,13 @@ export const newResourceController = async (
     },
   };
 
-  if (user._id) (resourceObj as any).creator.userId = user._id;
-  if (extractedIp) (resourceObj as any).creator.Ip = extractedIp;
-  if (resource.description)
-    (resourceObj as any).description = resource.description;
-  if (resource.price) (resourceObj as any).price = resource.price;
+  // conditonally checking for optional data and inserting it
+  if (user?._id) resourceObj.creator.userId = user._id;
+  if (extractedIp) resourceObj.creator.Ip = extractedIp;
+  if (resource.description) resourceObj.description = resource.description;
+  if (resource.price) resourceObj.price = resource.price;
+  if (resource.extraParameters)
+    resourceObj.extraParameters = resource.extraParameters;
 
   const newResource = new resourceModel(resourceObj);
 
