@@ -39,6 +39,18 @@ const resourceSchema = new schema({
     type: Number,
     required: [true, "Phone Number is required"],
   },
+  extraParameters: [
+    {
+      name: {
+        type: String,
+        required: [true, "Name of the extra parameter is required"],
+      },
+      value: {
+        type: Boolean,
+        required: [true, "Value of the extra parameter is required"],
+      },
+    },
+  ],
 });
 
 export default mongoose.model("Resource", resourceSchema);
