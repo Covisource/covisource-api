@@ -1,5 +1,4 @@
 import express from "express";
-import categoryModel from "../models/categoryModel";
 import resourceModel from "../models/resourceModel";
 
 export const newResourceController = async (
@@ -76,4 +75,12 @@ export const newResourceController = async (
       code: "mongo_err",
     });
   }
+};
+
+export const findResourceController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  res.json("test")
 };
