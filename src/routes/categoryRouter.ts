@@ -18,6 +18,6 @@ router.post(
   newCategoryController
 );
 
-router.get("/findCategory")
+router.get("/findCategory", findCategoryController)
 
 export default router;

@@ -7,10 +7,6 @@ const locationSchema = new Schema({
     enum: ["Point"],
     required: true,
   },
-  displayName: {
-    type: String,
-    required: [true, "Location Display Name Is Required"],
-  },
   coordinates: {
     type: [Number],
     required: true,
