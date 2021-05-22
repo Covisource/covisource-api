@@ -42,8 +42,8 @@ export const newResourceController = async (
     location: {
       type: "Point",
       coordinates: [
-        resource.location.coordinates.lat,
         resource.location.coordinates.long,
+        resource.location.coordinates.lat,
       ],
     },
   };
@@ -82,16 +82,13 @@ export const findResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { long, lat } = req.query;
+  const { lat, long } = req.query;
 
   try {
     const queryRes = await resourceModel.find({
       location: {
         $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [long, lat],
-          },
+          $geometry: { type: "Point", coordinates: [long, lat] },
         },
       },
     });
