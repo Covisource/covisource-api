@@ -1,7 +1,17 @@
 import express from "express";
-import { newResourceController } from "../controllers/resourceController";
-import authenticatedOrHasIp from "../middleware/authenticatedOrHasIp";
+
+// controllers
+import {
+  findResourceController,
+  newResourceController,
+} from "../controllers/resourceController";
+
+// validators
 import { newResourceValidator } from "../validators/resourceValidator";
+
+// middleware
+import authenticatedOrHasIp from "../middleware/authenticatedOrHasIp";
+
 const router = express.Router();
 
 router.post(
@@ -10,5 +20,7 @@ router.post(
   newResourceValidator,
   newResourceController
 );
+
+router.get("/findResource", findResourceController);
 
 export default router;

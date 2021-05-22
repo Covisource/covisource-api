@@ -1,5 +1,5 @@
+import { RSA_NO_PADDING } from "constants";
 import express from "express";
-import categoryModel from "../models/categoryModel";
 import resourceModel from "../models/resourceModel";
 
 export const newResourceController = async (
@@ -43,8 +43,8 @@ export const newResourceController = async (
       type: "Point",
       displayName: resource.location.displayName,
       coordinates: [
-        resource.location.coordinates.lat,
         resource.location.coordinates.long,
+        resource.location.coordinates.lat,
       ],
     },
   };
@@ -70,6 +70,37 @@ export const newResourceController = async (
       });
     }
   } catch (err) {
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
+};
+
+export const findResourceController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { lat, long } = req.query;
+
+  try {
+    const queryRes = await resourceModel.find({
+      location: {
+        $near: {
+          $geometry: { type: "Point", coordinates: [long, lat] },
+        },
+      },
+    });
+    return res.status(200).json({
+      message: "Sucessfully retrieved resources.",
+      code: "retrieve_success",
+      success: true,
+      data: queryRes,
+    });
+  } catch (err) {
+    console.error(err);
     return next({
       message: err.message,
       statusCode: 500,

@@ -20,7 +20,6 @@ export const newResourceValidator = async (
     !resource.title ||
     !resource.category ||
     !resource.phone ||
-    !resource.location.displayName ||
     !resource.location.coordinates.lat ||
     !resource.location.coordinates.long
   ) {
