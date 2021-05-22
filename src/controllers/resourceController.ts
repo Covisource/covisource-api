@@ -41,6 +41,7 @@ export const newResourceController = async (
     creator: {},
     location: {
       type: "Point",
+      displayName: resource.location.displayName,
       coordinates: [
         resource.location.coordinates.long,
         resource.location.coordinates.lat,
