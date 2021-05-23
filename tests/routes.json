@@ -1,6 +1,6 @@
 {
   "GET": {
-    "urls": ["/"]
+    "urls": ["/user/fetchUser"]
   },
   "POST": {
     "urls": [
