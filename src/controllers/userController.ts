@@ -12,7 +12,7 @@ export const newUserController = async (
     email: string;
     provider: string;
   }
-
+  console.log(req.body.user);
   const user: userSchema = req.body.user;
 
   // check to see if user already exists
@@ -71,7 +71,7 @@ export const fetchUserController = async (
   next: express.NextFunction
 ) => {
   const { user } = req as any;
-  
+
   return res.json({
     success: true,
     message: "Resource retrieved successfully.",

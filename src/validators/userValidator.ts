@@ -6,7 +6,6 @@ export const newUserValidator = async (
   next: express.NextFunction
 ) => {
   const { user } = req.body;
-
   if (!user) {
     return next({
       statusCode: 400,
