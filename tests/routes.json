@@ -1,0 +1,12 @@
+{
+  "GET": {
+    "urls": ["/user/fetchUser"]
+  },
+  "POST": {
+    "urls": [
+      {
+        "/user/newUser": "{\"user\": {\"name\": \"vpotti\",\"email\": \"vpotti@gmail.com\",\"id\": 1,\"provider\": \"google\"}}"
+      }
+    ]
+  }
+}
