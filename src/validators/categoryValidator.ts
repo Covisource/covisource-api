@@ -1,6 +1,5 @@
 import express from "express";
 import categoryModel from "../models/categoryModel";
-import userModel from "../models/userModel";
 
 export const newCategoryValidator = async (
   req: express.Request,

@@ -25,11 +25,13 @@ export const newResourceController = async (
   interface ResourceSchema {
     title: string;
     category: any;
-    phone: string;
+    phone?: string;
+    email?: string;
     creator: CreatorSchema;
     location: any;
     description?: string;
     price?: string;
+    quantity?: number;
     extraParameters?: ExtraParameterSchema[];
   }
 
@@ -37,7 +39,6 @@ export const newResourceController = async (
   const resourceObj: ResourceSchema = {
     title: resource.title,
     category: resource.category,
-    phone: resource.phone,
     creator: {},
     location: {
       type: "Point",
@@ -54,6 +55,9 @@ export const newResourceController = async (
   if (extractedIp) resourceObj.creator.Ip = extractedIp;
   if (resource.description) resourceObj.description = resource.description;
   if (resource.price) resourceObj.price = resource.price;
+  if (resource.email) resourceObj.email = resource.email;
+  if (resource.phone) resourceObj.phone = resource.phone;
+  if (resource.quantity) resourceObj.quantity = resource.quantity;
   if (resource.extraParameters)
     resourceObj.extraParameters = resource.extraParameters;
 

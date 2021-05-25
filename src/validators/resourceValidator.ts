@@ -19,10 +19,25 @@ export const newResourceValidator = async (
   if (
     !resource.title ||
     !resource.category ||
-    !resource.phone ||
     !resource.location.coordinates.lat ||
     !resource.location.coordinates.long
   ) {
+    return next({
+      statusCode: 400,
+      code: "bad_data",
+      message: "Make sure the data is valid.",
+    });
+  }
+
+  if (resource.method === "phone" && !resource.phone) {
+    return next({
+      statusCode: 400,
+      code: "bad_data",
+      message: "Make sure the data is valid.",
+    });
+  }
+
+  if (resource.method === "email" && !resource.email) {
     return next({
       statusCode: 400,
       code: "bad_data",
@@ -41,13 +56,21 @@ export const newResourceValidator = async (
       });
     }
 
+    if ((mongoRes as any).extraParameters && !resource.extraParameters) {
+      return next({
+        message: "Make sure the data is valid.", 
+        statusCode: 400, 
+        code: "bad_data",
+      });
+    }
+
     interface ParamSchema {
       name: string;
       isRequired?: boolean;
     }
 
-    (mongoRes as any).extraParameters?.forEach((categoryParam: ParamSchema) => {
-      if (categoryParam?.isRequired) {
+    (mongoRes as any).extraParameters.forEach((categoryParam: ParamSchema) => {
+      if (categoryParam.isRequired) {
         const searchRes = (resource.extraParameters as any[])?.find(
           (resourceParam) => resourceParam.name === categoryParam.name
         );

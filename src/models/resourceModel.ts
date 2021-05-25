@@ -36,8 +36,16 @@ const resourceSchema = new schema({
     required: false,
   },
   phone: {
+    type: String,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
+  },
+  quantity: {
     type: Number,
-    required: [true, "Phone Number is required"],
+    required: false,
   },
   extraParameters: [
     {
@@ -47,7 +55,7 @@ const resourceSchema = new schema({
       },
       value: {
         type: schema.Types.Mixed,
-        required: [true, "Value of the extra parameter is required"],
+        required: false,
       },
     },
   ],
