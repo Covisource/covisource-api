@@ -96,7 +96,8 @@ export const findResourceController = async (
           $geometry: { type: "Point", coordinates: [long, lat] },
         },
       },
-    });
+    }).populate("creator.userId").exec()
+    
     return res.status(200).json({
       message: "Sucessfully retrieved resources.",
       code: "retrieve_success",
