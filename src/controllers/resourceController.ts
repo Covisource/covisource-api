@@ -106,6 +106,7 @@ export const findResourceController = async (
         },
         category: categoryId,
       })
+      .select("-creator.Ip")
       .populate("creator.userId")
       .exec();
 
