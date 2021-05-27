@@ -1,5 +1,6 @@
 import express from "express";
 import categoryModel from "../models/categoryModel";
+import resourceModel from "../models/resourceModel";
 
 export const newResourceValidator = async (
   req: express.Request,
@@ -44,6 +45,7 @@ export const newResourceValidator = async (
       message: "Make sure the data is valid.",
     });
   }
+  
 
   // fetching the resource using the id and seeing if the user pased valid extra parameters
   try {
@@ -58,8 +60,8 @@ export const newResourceValidator = async (
 
     if ((mongoRes as any).extraParameters && !resource.extraParameters) {
       return next({
-        message: "Make sure the data is valid.", 
-        statusCode: 400, 
+        message: "Make sure the data is valid.",
+        statusCode: 400,
         code: "bad_data",
       });
     }

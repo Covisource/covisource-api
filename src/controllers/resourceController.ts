@@ -1,5 +1,6 @@
 import { RSA_NO_PADDING } from "constants";
 import express from "express";
+import categoryModel from "../models/categoryModel";
 import resourceModel from "../models/resourceModel";
 
 export const newResourceController = async (
@@ -87,17 +88,27 @@ export const findResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { lat, long } = req.query;
+  const { lat, long, category } = req.query;
 
   try {
-    const queryRes = await resourceModel.find({
-      location: {
-        $near: {
-          $geometry: { type: "Point", coordinates: [long, lat] },
+    const categoryId = (
+      (await categoryModel.findOne({
+        $text: { $search: (category as string).toString() },
+      })) as any
+    )._id;
+
+    const queryRes = await resourceModel
+      .find({
+        location: {
+          $near: {
+            $geometry: { type: "Point", coordinates: [long, lat] },
+          },
         },
-      },
-    }).populate("creator.userId").exec()
-    
+        category: categoryId,
+      })
+      .populate("creator.userId")
+      .exec();
+
     return res.status(200).json({
       message: "Sucessfully retrieved resources.",
       code: "retrieve_success",
