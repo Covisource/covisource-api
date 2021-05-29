@@ -17,7 +17,8 @@ export default async function (
   }
 
   try {
-    const verifiedToken: any = jwt.verify(token, "hi");
+    console.log(process.env.JWT_SECRET)
+    const verifiedToken: any = jwt.verify(token, String(process.env.JWT_SECRET));
 
     if (!verifiedToken.id) {
       return next({

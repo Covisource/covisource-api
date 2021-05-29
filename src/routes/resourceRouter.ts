@@ -2,6 +2,7 @@ import express from "express";
 
 // controllers
 import {
+  findByIdController,
   findResourceController,
   newResourceController,
 } from "../controllers/resourceController";
@@ -22,5 +23,7 @@ router.post(
 );
 
 router.get("/findResource", findResourceController);
+
+router.get("/findById/:id", findByIdController)
 
 export default router;

@@ -1,5 +1,6 @@
 import { RSA_NO_PADDING } from "constants";
 import express from "express";
+import categoryModel from "../models/categoryModel";
 import resourceModel from "../models/resourceModel";
 
 export const newResourceController = async (
@@ -87,22 +88,83 @@ export const findResourceController = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { lat, long } = req.query;
+  const { lat, long, category } = req.query;
 
   try {
-    const queryRes = await resourceModel.find({
-      location: {
-        $near: {
-          $geometry: { type: "Point", coordinates: [long, lat] },
-        },
-      },
+    if (category) {
+      const categoryId = (
+        (await categoryModel.findOne({
+          $text: { $search: (category as string).toString() },
+        })) as any
+      )._id;
+
+      const queryRes = await resourceModel
+        .find({
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [long || 20.5937, lat || 78.9629],
+              },
+            },
+          },
+          category: categoryId,
+        })
+        .populate("creator.userId")
+        .exec();
+
+      return res.status(200).json({
+        message: "Sucessfully retrieved resources.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    } else {
+      const queryRes = await resourceModel.find();
+      return res.status(200).json({
+        message: "Sucessfully retrieved resources.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
     });
-    return res.status(200).json({
-      message: "Sucessfully retrieved resources.",
-      code: "retrieve_success",
-      success: true,
-      data: queryRes,
-    });
+  }
+};
+
+export const findByIdController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const queryRes = await resourceModel
+      .findById(id)
+      .populate("category")
+      .exec();
+
+    if (queryRes) {
+      return res.status(200).json({
+        message: "Sucessfully retrieved resource by ID.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    } else {
+      return next({
+        message: "No Resource With That ID Found",
+        statusCode: 500,
+        code: "retrieve_failure",
+      });
+    }
   } catch (err) {
     console.error(err);
     return next({

@@ -15,6 +15,7 @@ const resourceSchema = new schema({
     Ip: {
       type: String,
       required: false,
+      select: false,
     },
     userId: {
       type: mongoose.Types.ObjectId,
