@@ -13,7 +13,6 @@ export default async function (
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     const ip = await publicIp.v6();
-    console.log(ip);
     if (ip) {
       (req as any).extractedIp = ip;
     } else {
@@ -27,7 +26,7 @@ export default async function (
   }
 
   try {
-    const verifiedToken: any = jwt.verify(token, "hi");
+    const verifiedToken: any = jwt.verify(token, String(process.env.JWT_SECRET));
 
     if (!verifiedToken.id) {
       return next({

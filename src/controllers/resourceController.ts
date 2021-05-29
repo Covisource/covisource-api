@@ -91,31 +91,81 @@ export const findResourceController = async (
   const { lat, long, category } = req.query;
 
   try {
-    const categoryId = (
-      (await categoryModel.findOne({
-        $text: { $search: (category as string).toString() },
-      })) as any
-    )._id;
+    if (category) {
+      const categoryId = (
+        (await categoryModel.findOne({
+          $text: { $search: (category as string).toString() },
+        })) as any
+      )._id;
 
-    const queryRes = await resourceModel
-      .find({
-        location: {
-          $near: {
-            $geometry: { type: "Point", coordinates: [long, lat] },
+      const queryRes = await resourceModel
+        .find({
+          location: {
+            $near: {
+              $geometry: {
+                type: "Point",
+                coordinates: [long || 20.5937, lat || 78.9629],
+              },
+            },
           },
-        },
-        category: categoryId,
-      })
-      .select("-creator.Ip")
-      .populate("creator.userId")
+          category: categoryId,
+        })
+        .select("-creator.Ip")
+        .populate("creator.userId")
+        .exec();
+
+      return res.status(200).json({
+        message: "Sucessfully retrieved resources.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    } else {
+      const queryRes = await resourceModel.find();
+      return res.status(200).json({
+        message: "Sucessfully retrieved resources.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return next({
+      message: err.message,
+      statusCode: 500,
+      code: "mongo_err",
+    });
+  }
+};
+
+export const findByIdController = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const queryRes = await resourceModel
+      .findById(id)
+      .populate("category")
       .exec();
 
-    return res.status(200).json({
-      message: "Sucessfully retrieved resources.",
-      code: "retrieve_success",
-      success: true,
-      data: queryRes,
-    });
+    if (queryRes) {
+      return res.status(200).json({
+        message: "Sucessfully retrieved resource by ID.",
+        code: "retrieve_success",
+        success: true,
+        data: queryRes,
+      });
+    } else {
+      return next({
+        message: "No Resource With That ID Found",
+        statusCode: 500,
+        code: "retrieve_failure",
+      });
+    }
   } catch (err) {
     console.error(err);
     return next({
