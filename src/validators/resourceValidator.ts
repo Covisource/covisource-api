@@ -9,6 +9,14 @@ export const newResourceValidator = async (
 ) => {
   const { resource } = req.body;
 
+  const phoneRegex = new RegExp(
+    "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$"
+  );
+
+  const emailRegex = new RegExp(
+    "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+  );
+
   if (!resource) {
     return next({
       statusCode: 400,
@@ -30,7 +38,10 @@ export const newResourceValidator = async (
     });
   }
 
-  if (resource.method === "phone" && !resource.phone) {
+  if (
+    resource.method === "phone" &&
+    (!resource.phone || !phoneRegex.test(resource.phone))
+  ) {
     return next({
       statusCode: 400,
       code: "bad_data",
@@ -38,14 +49,16 @@ export const newResourceValidator = async (
     });
   }
 
-  if (resource.method === "email" && !resource.email) {
+  if (
+    resource.method === "email" &&
+    (!resource.email || !emailRegex.test(resource.email))
+  ) {
     return next({
       statusCode: 400,
       code: "bad_data",
       message: "Make sure the data is valid.",
     });
   }
-  
 
   // fetching the resource using the id and seeing if the user pased valid extra parameters
   try {

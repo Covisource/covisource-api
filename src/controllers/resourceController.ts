@@ -34,6 +34,7 @@ export const newResourceController = async (
     price?: string;
     quantity?: number;
     extraParameters?: ExtraParameterSchema[];
+    source?: string;
   }
 
   // forming the resource to be inserted
@@ -61,6 +62,7 @@ export const newResourceController = async (
   if (resource.quantity) resourceObj.quantity = resource.quantity;
   if (resource.extraParameters)
     resourceObj.extraParameters = resource.extraParameters;
+  if (resource.source) resourceObj.source = resource.source;
 
   const newResource = new resourceModel(resourceObj);
 

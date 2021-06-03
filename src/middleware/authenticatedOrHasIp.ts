@@ -12,21 +12,21 @@ export default async function (
 ) {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    const ip = await publicIp.v6();
-    if (ip) {
-      (req as any).extractedIp = ip;
-    } else {
-      return next({
-        message: "No IP found",
-        statusCode: 500,
-        code: "no_ip",
-      });
-    }
+    try {
+      const ip = await publicIp.v6();
+      if (ip) {
+        (req as any).extractedIp = ip;
+      }
+    } catch (err) {}
+
     return next();
   }
 
   try {
-    const verifiedToken: any = jwt.verify(token, String(process.env.JWT_SECRET));
+    const verifiedToken: any = jwt.verify(
+      token,
+      String(process.env.JWT_SECRET)
+    );
 
     if (!verifiedToken.id) {
       return next({
@@ -46,7 +46,7 @@ export default async function (
       });
     }
 
-    (req as any).user = res
+    (req as any).user = res;
   } catch (err) {
     return next({
       message: err.message,

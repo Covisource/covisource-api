@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import rateLimit from "express-rate-limit"
+import rateLimit from "express-rate-limit";
 
 // ROUTERS
 import { errorHandler, get404 } from "./controllers/errorController";
@@ -19,13 +19,18 @@ const app = express();
 dotenv.config();
 
 // CORS CONFIG
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // RATE LIMITING
 const limiter = rateLimit({
   windowMs: 60000, // 1 minute
   max: 100, // limit each IP to 100 requests per windowMs,
-  message: "Too Many requests fired from this IP. Please wait and try again later."
+  message:
+    "Too Many requests fired from this IP. Please wait and try again later.",
 });
 
 app.use(limiter);
