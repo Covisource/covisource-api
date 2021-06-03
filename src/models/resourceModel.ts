@@ -44,6 +44,10 @@ const resourceSchema = new schema({
     type: String,
     required: false,
   },
+  source: {
+    type: String,
+    required: false,
+  },
   quantity: {
     type: Number,
     required: false,
