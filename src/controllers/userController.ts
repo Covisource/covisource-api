@@ -19,6 +19,7 @@ export const newUserController = async (
     const res = await userModel.findOne({
       $or: [{ id: `${user.provider}_${user.id}` }, { email: user.email }],
     });
+
     if (res) {
       console.log("New User Controller: User already exists");
       return next({
